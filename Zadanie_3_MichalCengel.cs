@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace Zadanie_3_MichalCengel
@@ -53,8 +54,8 @@ namespace Zadanie_3_MichalCengel
                 }
                 break;
             }
-            File.WriteAllLines(nazovSuboru, spracovaneData,Encoding.Default);
-            Console.WriteLine("Skonvertované dáta zapísané úspešne!");
+            File.WriteAllLines(nazovSuboru, spracovaneData, Encoding.Default);
+            Console.WriteLine("Operácia konverzie dokončená!");
         }
         private List<string> VyhodnotData(List<string> dataNaAnalyzu)
         {
@@ -67,11 +68,33 @@ namespace Zadanie_3_MichalCengel
         }
         private string SpracujRiadok(string riadokNaSpracovanie)
         {
-            string spracovanyRiadok = null;
+            string[] casti = riadokNaSpracovanie.Split(' ');
+            string spracovanyRiadok = casti[0] + ' ' + casti[1] + "\t" + (casti.Length - 2) + "\t";
+            if ((casti.Length - 2) == 1)
+            {
+                spracovanyRiadok += casti[2];
+                return spracovanyRiadok;
+            }
+            else
+            {
+                double[] meranie = new double[casti.Length - 2];
 
-            spracovanyRiadok = riadokNaSpracovanie;
-
-            return spracovanyRiadok;
+                for (int i = 2; i < casti.Length; i++)
+                {
+                    try
+                    {
+                        if (!double.TryParse(casti[i], out meranie[i - 2]))
+                            throw new NespravnyVstupException("Konverzia_neúspešná_pre_nesprávny_formát_vstupných_údajov!");
+                    }
+                    catch (NespravnyVstupException ex)
+                    {
+                        return spracovanyRiadok + ex.Message;
+                    }
+                }
+                double average = Math.Round(meranie.Average(), 2);
+                spracovanyRiadok += average;
+                return spracovanyRiadok;
+            }
         }
         public void VypisPovodne()
         {
