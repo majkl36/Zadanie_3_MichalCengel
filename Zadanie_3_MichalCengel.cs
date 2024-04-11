@@ -30,7 +30,7 @@ namespace Zadanie_3_MichalCengel
         }
         public void ZapisDoSuboru(string nazovSuboru)
         {
-            Console.WriteLine("Zapisujem skonvertované dáta do súboru {0}", nazovSuboru);
+            Console.WriteLine("Zapisujem skonvertované dáta do súboru {0}\n", nazovSuboru);
             char volba;
             while (File.Exists(nazovSuboru))
             {
@@ -38,12 +38,12 @@ namespace Zadanie_3_MichalCengel
                 {
                     Console.Write("Súbor už existuje. Prepísať? (y/n): ");
                     if (!char.TryParse(Console.ReadLine(), out volba))
-                        throw new NespravnyVstupException("Odpoveď nerozpoznaná.");
+                        throw new NespravnyVstupException("Nesprávne zadaná odpoveď.");
                     if (!(volba.Equals('y') || volba.Equals('n')))
                         throw new NespravnyVstupException("Odpoveď nerozpoznaná.");
                     if (volba.Equals('n'))
                     {
-                        Console.WriteLine("Súbor nebol prepísaný.");
+                        Console.WriteLine("\nSúbor nebol prepísaný.\n");
                         return;
                     }
                 }
@@ -55,7 +55,7 @@ namespace Zadanie_3_MichalCengel
                 break;
             }
             File.WriteAllLines(nazovSuboru, spracovaneData, Encoding.Default);
-            Console.WriteLine("Operácia konverzie dokončená!");
+            Console.WriteLine("\nOperácia konverzie dokončená!\n");
         }
         private List<string> VyhodnotData(List<string> dataNaAnalyzu)
         {
@@ -115,21 +115,23 @@ namespace Zadanie_3_MichalCengel
             try
             {
                 Konverzia konv = new Konverzia("Zadanie_03_Vstup.txt");
-                konv.ZapisDoSuboru("zidan.txt");
-                //konv.VypisPovodne();
-                //konv.VypisSpracovane();
-
+                konv.ZapisDoSuboru("Zadanie_03_Vystup.txt");
             }
             catch (FileNotFoundException)
             {
-                Console.WriteLine("Vstupný súbor nenájdený!");
+                Console.WriteLine("Vstupný súbor nenájdený!\n");
             }
             catch (IOException)
             {
-                Console.WriteLine("Chyba pri práci so súborom");
+                Console.WriteLine("Chyba pri práci so súborom!\n");
+            }
+            catch (UnauthorizedAccessException)
+            {
+                Console.WriteLine("Prístup pre zápis do súboru je zamietnutý.\n");
             }
             finally
             {
+                Console.WriteLine("Pre ukončenie programu stlačte ľubovoľnú klávesu.");
                 Console.ReadKey();
             }
         }
