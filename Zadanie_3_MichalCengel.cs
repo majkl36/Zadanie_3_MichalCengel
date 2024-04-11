@@ -31,13 +31,12 @@ namespace Zadanie_3_MichalCengel
         public void ZapisDoSuboru(string nazovSuboru)
         {
             Console.WriteLine("Zapisujem skonvertované dáta do súboru {0}\n", nazovSuboru);
-            char volba;
             while (File.Exists(nazovSuboru))
             {
                 try
                 {
                     Console.Write("Súbor už existuje. Prepísať? (y/n): ");
-                    if (!char.TryParse(Console.ReadLine(), out volba))
+                    if (!char.TryParse(Console.ReadLine(), out char volba))
                         throw new NespravnyVstupException("Nesprávne zadaná odpoveď.");
                     if (!(volba.Equals('y') || volba.Equals('n')))
                         throw new NespravnyVstupException("Odpoveď nerozpoznaná.");
@@ -135,7 +134,7 @@ namespace Zadanie_3_MichalCengel
             }
             catch (Exception)
             {
-                Console.WriteLine("Nastala neočakávaná chyba!")
+                Console.WriteLine("Nastala neočakávaná chyba!");
             }
             finally
             {
