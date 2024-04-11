@@ -69,6 +69,10 @@ namespace Zadanie_3_MichalCengel
         private string SpracujRiadok(string riadokNaSpracovanie)
         {
             string[] casti = riadokNaSpracovanie.Split(' ');
+            if (casti.Length < 3)
+            {
+                return "Neplatné údaje pre konverziu!";
+            }
             string spracovanyRiadok = casti[0] + ' ' + casti[1] + "\t" + (casti.Length - 2) + "\t";
             if ((casti.Length - 2) == 1)
             {
@@ -127,7 +131,11 @@ namespace Zadanie_3_MichalCengel
             }
             catch (UnauthorizedAccessException)
             {
-                Console.WriteLine("Prístup pre zápis do súboru je zamietnutý.\n");
+                Console.WriteLine("Prístup pre zápis do súboru je zamietnutý!\n");
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Nastala neočakávaná chyba!")
             }
             finally
             {
