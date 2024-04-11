@@ -14,8 +14,8 @@ namespace Zadanie_3_MichalCengel
     }
     class Konverzia
     {
-        private List<string> povodneData;
-        private List<string> spracovaneData;
+        private readonly List<string> povodneData;
+        private readonly List<string> spracovaneData;
         public Konverzia(string vstupnySubor)
         {
             povodneData = NacitajSubor(vstupnySubor);
